@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Poster"
         mc:Ignorable="d"
-        Title="MainWindow" Height="377" Width="555">
+        Title="MainWindow" Height="377" Width="555" Loaded="Window_Loaded">
     <Grid>
         <TabControl x:Name="tabControl">
             <TabItem Header="Почта">
@@ -20,7 +20,13 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Настройки">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="textLogin" HorizontalAlignment="Left" Height="23" Margin="183,22,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="191"/>
+                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="37,23,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top"/>
+                    <TextBox x:Name="textPass" HorizontalAlignment="Left" Height="23" Margin="183,57,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="191"/>
+                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="37,58,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top"/>
+                    <Button x:Name="button1" Content="Сохранить" HorizontalAlignment="Left" Margin="193,95,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.027,-1.75" Click="button1_Click"/>
+                </Grid>
             </TabItem>
         </TabControl>
 

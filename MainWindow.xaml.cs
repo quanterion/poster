@@ -257,5 +257,40 @@ namespace Poster
                 Log($"Отсутствует код запроса. Откройте файл для его получения.");
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            textLogin.Text = ConfigurationManager.AppSettings["Login"];
+            textPass.Text = ConfigurationManager.AppSettings["Password"];
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            AddUpdateAppSettings("Login", textLogin.Text);
+            AddUpdateAppSettings("Password", textPass.Text);
+        }
+
+        static void AddUpdateAppSettings(string key, string value)
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                if (settings[key] == null)
+                {
+                    settings.Add(key, value);
+                }
+                else
+                {
+                    settings[key].Value = value;
+                }
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+            }
+            catch (ConfigurationErrorsException)
+            {
+                Console.WriteLine("Error writing app settings");
+            }
+        }
     }
 }
