@@ -48,13 +48,7 @@ namespace Poster
 
         private void Log(string Text)
         {
-            logBlock.Inlines.Add(new Line {
-                X1 = 0,
-                Y1 = 0,
-                X2 = 100,
-                Y2 = 0,
-                Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 4.0 }
-            );
+            listBox.Items.Add(Text);
         }
 
         private List<RpoCode> ImportFile(string fileName)
@@ -124,7 +118,7 @@ namespace Poster
                 var ErrorNode = ResponseXml.SelectSingleNode("//S:Envelope//S:Body//ns2:ticketResponse/error", manager);
                 if (ErrorNode != null)
                 {
-                    Log($"Ошибка исполнения запроса: ${ErrorNode.Attributes["ErrorName"]}");
+                    Log($"Ошибка исполнения запроса: ${ErrorNode.Attributes["ErrorName"].Value}");
                 }
                 else
                 {
@@ -177,7 +171,7 @@ namespace Poster
                 var ErrorNode = ResponseXml.SelectSingleNode("//S:Envelope//S:Body//ns2:ticketResponse/error", manager);
                 if (ErrorNode != null)
                 {
-                    Log($"Ошибка исполнения запроса: ${ErrorNode.Attributes["ErrorName"]}");
+                    Log($"Ошибка исполнения запроса: ${ErrorNode.Attributes["ErrorName"].Value}");
                 }
                 var List = ResponseXml.SelectNodes("//S:Envelope//S:Body/ns2:answerByTicketResponse/value//ns3:Item", manager);
                 if (List.Count > 0)
@@ -214,7 +208,6 @@ namespace Poster
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            SendRequest(null);
             var Dialog = new Microsoft.Win32.OpenFileDialog();
             Dialog.DefaultExt = ".xml";
             Dialog.Filter = "Xml (*.xml)|*.xml|Text files (*.txt)|*.txt";
@@ -254,11 +247,14 @@ namespace Poster
         {
             if (this._ticketId != null) {
                 var Items = ExtractResponse(this._ticketId);
-                ExportItems(Items);
+                if (Items.Count > 0)
+                {
+                    ExportItems(Items);
+                }
             }
             else
             {
-                Log($"Отсутствеует код запроса. Откройте файл для его получения.");
+                Log($"Отсутствует код запроса. Откройте файл для его получения.");
             }
         }
     }

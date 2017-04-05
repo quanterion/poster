@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Poster"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="377" Width="555">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="319" VerticalAlignment="Top" Width="517">
+        <TabControl x:Name="tabControl">
             <TabItem Header="Почта">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="254*"/>
                         <RowDefinition Height="37*"/>
                     </Grid.RowDefinitions>
-                    <Button x:Name="button" Content="Открыть" HorizontalAlignment="Left" Margin="325,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-                    <Button x:Name="button1" Content="Сохранить" HorizontalAlignment="Left" Margin="426,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock x:Name="logBlock" TextWrapping="Wrap" Text="Инитиализация программы... Успешно!" VerticalAlignment="Top" Height="254"/>
+                    <Button x:Name="button" Content="Открыть" HorizontalAlignment="Left" Margin="268,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+                    <Button x:Name="button2" Content="Получить_результат" HorizontalAlignment="Left" Margin="361,7,0,0" Grid.Row="1" VerticalAlignment="Top" Width="130" Height="23" Click="button2_Click"/>
+                    <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="234" VerticalAlignment="Top" Width="521" Margin="10,10,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Настройки">
