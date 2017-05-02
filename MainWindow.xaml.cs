@@ -275,15 +275,36 @@ namespace Poster
             Doc.Save(fileName);
         }
 
+        private void ExportToCsv(List<RpoStatus> items, string fileName)
+        {
+            //before your loop
+            var csv = new StringBuilder();
+
+            foreach (var Item in items)
+            {
+                csv.AppendLine($" {Item.BarCode};{Item.Status};{Item.DateOper}");
+            }
+
+            //after your loop
+            File.WriteAllText(fileName, csv.ToString());
+        }
+
         private void ExportItems(List<RpoStatus> items)
         {
             SaveFileDialog SaveDialog = new SaveFileDialog();
-            SaveDialog.Filter = "Xml|*.xml";
+            SaveDialog.Filter = "Xml|*.xml|CSV|*.csv";
             SaveDialog.Title = "Save an Image File";
             SaveDialog.ShowDialog();
             if (SaveDialog.FileName != "")
             {
-                ExportToXml(items, SaveDialog.FileName);
+                if (System.IO.Path.GetExtension(SaveDialog.FileName).ToLower() == ".csv")
+                {
+                    ExportToCsv(items, SaveDialog.FileName);
+                }
+                else
+                {
+                    ExportToXml(items, SaveDialog.FileName);
+                }
             }
         }
 
