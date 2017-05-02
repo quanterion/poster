@@ -280,13 +280,14 @@ namespace Poster
             //before your loop
             var csv = new StringBuilder();
 
+            csv.AppendLine($"Код;Статус;Дата");
             foreach (var Item in items)
             {
-                csv.AppendLine($" {Item.BarCode};{Item.Status};{Item.DateOper}");
+                csv.AppendLine($"_{Item.BarCode};{Item.Status};{Item.DateOper}");
             }
 
             //after your loop
-            File.WriteAllText(fileName, csv.ToString());
+            File.WriteAllText(fileName, csv.ToString(), Encoding.GetEncoding("windows-1251"));
         }
 
         private void ExportItems(List<RpoStatus> items)
@@ -315,6 +316,10 @@ namespace Poster
                 if (Items.Count > 0)
                 {
                     ExportItems(Items);
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Результат обрабатывается. Подождите.");
                 }
             }
             else
