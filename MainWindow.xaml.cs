@@ -54,9 +54,17 @@ namespace Poster
         private List<RpoCode> ImportFile(string fileName)
         {
             var Doc = new XmlDocument();
-            Doc.Load(fileName);
-            var Codes = Doc.SelectNodes("dataroot/RPOF");
+            Doc.Load(fileName);            
             var List = new List<RpoCode>();
+            var Codes1 = Doc.SelectNodes("dataroot/RPOF");
+            AddCodes(Codes1, List);
+            var Codes2 = Doc.SelectNodes("dataroot/RPOFIRMA");
+            AddCodes(Codes2, List);
+            return List;
+        }
+
+        private static void AddCodes(XmlNodeList Codes, List<RpoCode> List)
+        {
             for (var k = 0; k < Codes.Count; ++k)
             {
                 var Item = Codes.Item(k);
@@ -64,8 +72,7 @@ namespace Poster
                 Code.FirmID = Item.SelectSingleNode("IDFIRM").InnerText;
                 Code.BarCode = Item.SelectSingleNode("BARCODE").InnerText;
                 List.Add(Code);
-            }                
-            return List;
+            }
         }
 
         private string SendRequest(List<RpoCode> Codes)
@@ -99,6 +106,23 @@ namespace Poster
                         </pos:ticketRequest>
                     </soapenv:Body>
                 </soapenv:Envelope>");
+
+            XmlNamespaceManager manager1 = new XmlNamespaceManager(soapEnvelopeXml.NameTable);
+            manager1.AddNamespace("soapenv", "http://schemas.xmlsoap.org/soap/envelope/");
+            manager1.AddNamespace("pos", "http://fclient.russianpost.org/postserver");
+            manager1.AddNamespace("fcl", "http://fclient.russianpost.org");
+            var req = soapEnvelopeXml.SelectSingleNode("//soapenv:Envelope//soapenv:Body/pos:ticketRequest/request", manager1);
+            req.RemoveAll();
+
+            foreach (var code in Codes)
+            {
+                var child = soapEnvelopeXml.CreateElement("fcl", "Item", "http://fclient.russianpost.org");
+                var barAtt = soapEnvelopeXml.CreateAttribute("Barcode");
+                barAtt.Value = code.BarCode;
+                child.Attributes.Append(barAtt);
+                req.AppendChild(child);
+            }
+
             using (var stream = request.GetRequestStream())
             {
                 soapEnvelopeXml.Save(stream);
@@ -183,8 +207,28 @@ namespace Poster
                         Status.BarCode = Item.Attributes["Barcode"].Value;
                         if (Item.LastChild != null)
                         {
-                            Status.Status = Item.LastChild.Attributes["OperName"].Value;
-                            Status.DateOper = Item.LastChild.Attributes["DateOper"].Value;
+                            var OperName = Item.LastChild.Attributes["OperName"];
+                            if (OperName != null)
+                            {
+                                Status.Status = OperName.Value;
+                            }
+                            else
+                            {
+                                var ErrorName = Item.LastChild.Attributes["ErrorName"];
+                                if (ErrorName != null)
+                                {
+                                    Status.Status = ErrorName.Value;
+                                }
+                            }
+                            var DateOper = Item.LastChild.Attributes["DateOper"];
+                            if (DateOper != null)
+                            {
+                                Status.DateOper = Item.LastChild.Attributes["DateOper"].Value;
+                            }
+                            else
+                            {
+                                Status.DateOper = "Unknown";
+                            }
                             Result.Add(Status);
                         }                        
                     }

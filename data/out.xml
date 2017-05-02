@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RPO>
+  <BARCODE>
+    <CODE>39403306407160</CODE>
+    <STATUS>Передача на временное хранение</STATUS>
+    <DATE>30.01.2017 16:00:00</DATE>
+  </BARCODE>
+  <BARCODE>
+    <CODE>39403306407153</CODE>
+    <STATUS>Передача на временное хранение</STATUS>
+    <DATE>01.02.2017 16:33:00</DATE>
+  </BARCODE>
+  <BARCODE>
+    <CODE>39403306407122</CODE>
+    <STATUS>Вручение</STATUS>
+    <DATE>30.12.2016 15:32:09</DATE>
+  </BARCODE>
+  <BARCODE>
+    <CODE>39403306407146</CODE>
+    <STATUS>Передача на временное хранение</STATUS>
+    <DATE>15.02.2017 15:25:00</DATE>
+  </BARCODE>
+  <BARCODE>
+    <CODE>39403306407115</CODE>
+    <STATUS>Передача на временное хранение</STATUS>
+    <DATE>30.01.2017 16:00:00</DATE>
+  </BARCODE>
+  <BARCODE>
+    <CODE>39403306407139</CODE>
+    <STATUS>Вручение</STATUS>
+    <DATE>24.01.2017 11:23:43</DATE>
+  </BARCODE>
+  <BARCODE>
+    <CODE>39403306407092</CODE>
+    <STATUS>Передача на временное хранение</STATUS>
+    <DATE>30.01.2017 16:00:00</DATE>
+  </BARCODE>
+  <BARCODE>
+    <CODE>39403306407108</CODE>
+    <STATUS>Вручение</STATUS>
+    <DATE>23.01.2017 19:15:34</DATE>
+  </BARCODE>
+</RPO>
